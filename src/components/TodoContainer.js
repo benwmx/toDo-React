@@ -1,10 +1,11 @@
-/* eslint-disable no-param-reassign */
+/* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/state-in-constructor */
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
 import TodoList from './TodoList';
 import Header from './Header';
+import InputTodo from './InputTodo';
 
 class TodoContainer extends React.Component {
   state = {
@@ -41,11 +42,31 @@ class TodoContainer extends React.Component {
     }));
   }
 
+  delTodo = (id) => {
+    this.setState((state) => ({
+      todos: state.todos.filter((todo) => todo.id !== id),
+    }));
+  }
+
+  addTodoItem = (title) => {
+    const newTodo = {
+      id: 4,
+      title,
+      completed: false,
+    };
+    this.setState({ todos: [...this.state.todos, newTodo] });
+  };
+
   render() {
     return (
       <div>
         <Header />
-        <TodoList todos={this.state.todos} handleChangeProps={this.handleChange} />
+        <InputTodo addTodoProps={this.addTodoItem} />
+        <TodoList
+          todos={this.state.todos}
+          handleChangeProps={this.handleChange}
+          delTodoProps={this.delTodo}
+        />
       </div>
     );
   }
