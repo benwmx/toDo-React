@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unused-state */
+/* eslint-disable react/state-in-constructor */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prefer-stateless-function */
@@ -5,6 +7,20 @@ import React from 'react';
 import styles from './TodoItem.module.css';
 
 export default class TodoItem extends React.Component {
+  state = {
+    editing: false,
+  }
+
+  handleEditing = () => {
+    this.setState({
+      editing: true,
+    });
+  }
+
+  handleUpdatedDone = (event) => {
+    if (event.key === 'Enter') this.setState({ editing: false });
+  }
+
   render() {
     const completedStyle = {
       fontStyle: 'italic',
@@ -13,14 +29,25 @@ export default class TodoItem extends React.Component {
       textDecoration: 'line-through',
 
     };
+    const viewMode = {};
+    const editMode = {};
+
+    if (this.state.editing) {
+      viewMode.display = 'none';
+    } else {
+      editMode.display = 'none';
+    }
     const { completed, id, title } = this.props.todo;
     return (
       <li className={styles.item}>
-        <input type="checkbox" className={styles.checkbox} checked={completed} onChange={() => this.props.handleChangeProps(id)} />
-        <button type="button" onClick={() => this.props.delTodoProps(id)}> Delete</button>
-        <span style={completed ? completedStyle : null}>
-          { title }
-        </span>
+        <div onDoubleClick={this.handleEditing} style={viewMode}>
+          <input type="checkbox" className={styles.checkbox} checked={completed} onChange={() => this.props.handleChangeProps(id)} />
+          <button type="button" onClick={() => this.props.delTodoProps(id)}> Delete</button>
+          <span style={completed ? completedStyle : null}>
+            { title }
+          </span>
+        </div>
+        <input type="text" style={editMode} className={styles.textInput} value={title} onChange={(event) => { this.props.setUpdate(event.target.value, id); }} onKeyDown={this.handleUpdatedDone} />
       </li>
     );
   }
