@@ -29,13 +29,20 @@ class TodoContainer extends React.Component {
   }
 
   componentDidMount = () => {
-    fetch('https://jsonplaceholder.typicode.com/todos?_limit=10')
-      .then((response) => response.json())
-      .then((data) => {
-        this.setState({
-          todos: data,
-        });
+    const temp = localStorage.getItem('todos');
+    const localTodos = JSON.parse(temp);
+    if (localTodos) {
+      this.setState({
+        todos: localTodos,
       });
+    }
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevState !== this.state) {
+      const temp = JSON.stringify(this.state.todos);
+      localStorage.setItem('todos', temp);
+    }
   }
 
   delTodo = (id) => {
