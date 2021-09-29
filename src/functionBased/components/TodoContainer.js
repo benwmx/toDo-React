@@ -52,7 +52,6 @@ const TodoContainer = () => {
 
   useEffect(() => {
   // storing todos items
-    console.log('store todos');
     const temp = JSON.stringify(todos);
     localStorage.setItem('todos', temp);
   }, [todos]);

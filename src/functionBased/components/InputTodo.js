@@ -4,6 +4,7 @@
 /* eslint-disable react/state-in-constructor */
 /* eslint-disable react/prefer-stateless-function */
 import React, { useState } from 'react';
+import { FaPlusCircle } from 'react-icons/fa';
 
 const InputTodo = (props) => {
   const [inputText, setInputText] = useState({ title: '' });
@@ -28,7 +29,9 @@ const InputTodo = (props) => {
   return (
     <form onSubmit={handleSubmit} className="form-container">
       <input type="text" name="title" className="input-text" placeholder="Add Todo ..." value={inputText.title} onChange={onChange} />
-      <button type="submit" className="input-submit">Submit</button>
+      <button type="submit" className="input-submit">
+        <FaPlusCircle style={{ color: 'darkcyan', fontSize: '20px', marginTop: '2px' }} />
+      </button>
     </form>
   );
 };
