@@ -1,5 +1,8 @@
 # toDo-React
 to do application with ReactJs.
+
+## Live Demo
+the App is deployed to github pages [Link](https://benwmx.github.io/toDo-React/)
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
